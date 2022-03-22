@@ -8,35 +8,30 @@ import Grid from '@mui/material/Grid';
 
 export default function AdditionalCard({ weather }) {
     return(
-        <Grid item xs={2}>
             <Card 
                 sx={{ bgcolor: "inherit", boxShadow: 3 , '&:hover': { backgroundColor: 'rgba(0,0,0,.03)'}, }}
-            >
-                <Typography variant="h5" textAlign="center">
-                    { weather.weekDay }
-                </Typography>
-                <Typography variant="subtitle2" textAlign="center">
-                    { weather.date }
-                </Typography>
-                <CardContent>
-                    <CardMedia
-                        component="img"
-                        sx={{ width: '7rem' }}
-                        image={ weather.image }
-                        alt="Condition"
-                    />
+            >     
+                <CardContent sx={{display: 'flex', flexDirection: 'column'}}>
+                    <Typography textAlign="center">
+                        { weather.weekDay }
+                    </Typography>
+                    <Typography textAlign="center">
+                        { weather.date }
+                    </Typography>
+
+                    <img src={weather.image} width="96px" style={{alignSelf: 'center'}}></img>
+
+                    <Typography>
+                        {weather.temperatureDay}
+                    </Typography>
+                    <Typography sx={{ opacity: '0.5' }}>
+                        {weather.temperatureNight}
+                    </Typography>
+                    <Typography sx={{ opacity: '0.5' }}>
+                        {weather.description}
+                    </Typography>
                 </CardContent>
-                <Typography>
-                    Day temperature is { weather.temperatureDay }
-                </Typography>
-                <Typography>
-                    Night temperature is { weather.temperatureNight }
-                </Typography>
-                <Typography>
-                    { weather.description }
-                </Typography>
             </Card>
-        </Grid>
     )
 }
 

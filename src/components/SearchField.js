@@ -6,15 +6,8 @@ import IconButton from '@mui/material/IconButton';
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
 import Container from '@mui/material/Container';
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
-import { getCityCoordByName, getWeatherByCoords} from '../api/axios';
-import MainCard from './MainCard';
-import processingDataFromWeather from '../helpers/processingDataFromWeather';
-import AdditionalCard from './AdditionalCard';
-import Grid from '@mui/material/Grid';
 
 class SearchField extends React.Component {
     constructor(props) {
@@ -34,7 +27,7 @@ class SearchField extends React.Component {
 
     onKeyPress(event) {
         if(event.charCode === 13) {
-            this.handleClick();
+            this.props.onSearchSubmit(this.state.searchText);
         };
     }
 
@@ -43,11 +36,7 @@ class SearchField extends React.Component {
     }
 
     async handleClick() {
-        console.log('Click!');
-        const city = await getCityCoordByName(this.state.searchText);
-        // if(city.lat === 0) {this.handleError};
-        this.setState({ weather: (await getWeatherByCoords(city)).data, city: this.state.searchText });
-        console.log(this.state.weather);
+        this.props.onSearchSubmit(this.state.searchText);
     }
 
     handleError() {
@@ -95,21 +84,6 @@ class SearchField extends React.Component {
                             </IconButton>
                     </Paper>
                 </Container>
-                {this.state.city &&
-                    <Container maxWidth='false'>
-                        <MainCard 
-                            weather={ processingDataFromWeather(this.state.weather.current, this.state.weather.timezone_offset) } 
-                            city = { this.state.city[0].toUpperCase() + this.state.city.substring(1,) }
-                        />
-                        {/* <Container sx={{ display: 'flex', flexDirection: 'row' }} > */}
-                        <Box display="flex">
-                            <Grid container spacing={1} sx={{  }}>
-                                { this.state.weather.daily.map( currentDay => <AdditionalCard weather = { processingDataFromWeather(currentDay, this.state.weather.timezone_offset) } /> ) }
-                            </Grid>
-                        </Box>
-                        {/* </Container> */}
-                    </Container>
-                    }
             </div>
         );
     }
