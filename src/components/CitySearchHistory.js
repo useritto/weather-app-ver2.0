@@ -5,7 +5,6 @@ import * as React from 'react';
 class CitySearchHistory extends React.Component {
     constructor(props) {
         super(props);
-
         this.buttonClick = this.buttonClick.bind(this);
     }
 

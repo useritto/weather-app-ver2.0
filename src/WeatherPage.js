@@ -1,5 +1,5 @@
 import React from 'react';
-import i18n from 'i18next';
+import i18next from 'i18next';
 import Headers from './components/Header';
 import SearchField from './components/SearchField';
 import CitySearchHistory from './components/CitySearchHistory';
@@ -8,27 +8,27 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { getCityCoordByName, getWeatherByCoords} from './api/axios';
+import {languageByLocaleName} from "./helpers/formatters";
 
 class WeatherPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { city: '', weather: null, locale: localStorage.i18nextLng, rusLng: true, isLoading: false };
+        this.state = { city: '', weather: null, isLoading: false };
 
         this.fetchWeather = this.fetchWeather.bind(this);
-        this.handleError = this.handleError.bind(this);
         this.saveCityHistory = this.saveCityHistory.bind(this);
     }
 
-    render() {  
-        let language = (localStorage.i18nextLng === "en-US") ? "en" : "ru";
+    render() {
+        const locale = i18next.language || localStorage.getItem('i18nextLng') || 'ru-RU';
+        const language = languageByLocaleName(locale);
         return (
             <React.Fragment>
                 <Headers onSearchSubmit={this.fetchWeather} value={this.state.city[language]}/>
-                {/* <Headers /> */}
                 <SearchField onSearchSubmit={this.fetchWeather} value={'' || this.state.city[language]} />
                 <CitySearchHistory onSearchSubmit={this.fetchWeather} language={language}/>
                 {(!this.state.isLoading 
-                    ? this.state.weather && <WeatherView weather={this.state.weather} city={this.state.city} locale={this.state.locale}/>
+                    ? this.state.weather && <WeatherView weather={this.state.weather} city={this.state.city} locale={locale} language={language}/>
                     : <Box sx={{ height: "400px", display: 'flex', justifyContent: "center", alignItems: "center" }}>
                         <CircularProgress thickness={1.5} size={100}/>
                     </Box>
@@ -43,7 +43,7 @@ class WeatherPage extends React.Component {
     
     async fetchWeather(searchText) {
         this.setState({isLoading: true});
-        this.setState({locale: localStorage.i18nextLng});
+        this.setState({locale: i18next.language});
         const city = await getCityCoordByName(searchText);
         const weather = (await getWeatherByCoords(city, this.state.locale)).data;
         this.setState({ weather, city: {ru: city.local_names.ru , en: city.local_names.en || city.name}, isLoading: false });

@@ -11,6 +11,7 @@ class WeatherView extends React.Component {
                 <WeatherCard 
                     weather={prepareWeatherData(this.props.weather.current, this.props.weather.timezone, this.props.locale)} 
                     city = {this.props.city}
+                    language={this.props.language}
                 />
                 <Container maxWidth='xl'>
                     <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>

@@ -9,10 +9,9 @@ import SpeedIcon from '@mui/icons-material/Speed';
 
 import { useTranslation } from 'react-i18next';
 
-export default function WeatherCard({ weather, city }) {
+export default function WeatherCard({ weather, city, language }) {
     const { t } = useTranslation();
     const airLabel = `${weather.windSpeed} ${t("m_per_sec")}, ${t(`wind_direction.${weather.windDeg}`)}`, pressureLabel = `${weather.pressure} ${t("mm_Hg")}`;
-    let language = (localStorage.i18nextLng === "en-US") ? "en" : "ru";
 
     return (
         <Container maxWidth='xl'  sx={{ mb: 3, mx: 'auto' }}> 

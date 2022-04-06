@@ -28,3 +28,7 @@ export function prepareWeatherData(weatherData, timeZoneName, locale) {
         image: `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@4x.png`
     }
 }
+
+export function languageByLocaleName(localeName) {
+    return localeName.substring(0, 2);
+}
