@@ -1,0 +1,23 @@
+{
+    "locale": "en",
+    "input_label": "Enter the city name",
+    "tooltip": {
+        "clear": "Clear",
+        "search": "Search",
+        "lang": "Language"
+    },
+    "current_time": "Current time is",
+    "feels_like": "feels like",
+    "wind_direction": {
+        "N": "N",
+        "NE": "NE",
+        "E": "E",
+        "SE": "SE",
+        "S": "S",
+        "SW": "SW",
+        "W": "W",
+        "NW": "NW"
+    },
+    "m_per_sec": "m/s",
+    "mm_Hg": "mm Hg"
+}
